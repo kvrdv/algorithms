@@ -12,20 +12,22 @@ const graph = {
 };
 
 function breadthSearch(graph, start, end) {
-	let queue = [];
-	queue.push(start);
+	let queue = [start];
+	let visited = new Set();
 
 	while (queue.length > 0) {
 		const current = queue.shift();
-		if (!graph[current]) {
-			graph[current] = [];
-		}
-		if (graph[current].includes(end)) {
+
+		if (current === end) {
 			return true;
-		} else {
-			queue = [...queue, ...graph[current]];
+		}
+
+		if (!visited.has(current)) {
+			visited.add(current);
+			queue.push(...(graph[current] || []));
 		}
 	}
+
 	return false;
 }
 
